@@ -1,0 +1,20 @@
+﻿@page "/product/{id}"
+@inject IProductService ProductService
+
+<h3>@product.Title</h3>
+
+@code {
+    private Product product = null;
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override void OnInitialized()
+    {
+        if (ProductService.Products == null || ProductService.Products.Count == 0)
+        {
+            ProductService.LoadProducts();
+        }
+
+        product = ProductService.Products.FirstOrDefault(p => p.Id == Int32.Parse(Id));
+    }
+}
