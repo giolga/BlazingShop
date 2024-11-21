@@ -39,25 +39,39 @@ a, .btn-link {
     max-width: 200px;
     border-radius: 6px;
     margin-bottom: 10px;
+}
+
+.media-img-big {
+    transition: transform .2s;
+    max-height: 500px;
+    max-width: 500px;
+    border-radius: 6px;
+    margin-bottom: 10px;
     transition: transform .2s;
 }
 
-    .media-img:hover {
-        transform: scale(1.1);
-    }
+.media-img:hover {
+    transform: scale(1.1);
+}
 
-    .media-img-wrapper {
-        width: 200px;
-        height: 200px;
-        text-align: center;
-    }
+.media-img-wrapper {
+    width: 200px;
+    height: 200px;
+    text-align: center;
+}
+
+.media-img-big-wrapper {
+    width: 500px;
+    height: 500px;
+    text-align: center;
+}
 
 .original-price {
     text-decoration: line-through;
 }
 
 .price {
-    color:green;
+    color: green;
 }
 
 #blazor-error-ui {
@@ -89,3 +103,18 @@ a, .btn-link {
         content: "An error has occurred."
     }
 
+@media (max-width: 1023.98px) {
+    .media {
+        flex-direction: column;
+    }
+
+    .media-img-big-wrapper, .media-img-wrapper {
+        width: 100%;
+        height: auto;
+        text-align: center;
+    }
+
+    .media-img-big {
+        max-width: 300px;
+    }
+}
