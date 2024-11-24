@@ -1,19 +1,21 @@
 ﻿using BlazingShop.Shared;
+using System.Net.Http.Json;
 
 namespace BlazingShop.Client.Services.CategoryService
 {
     public class CategoryService : ICategoryService
     {
         public List<Category> Categories { get; set; } = new List<Category>();
+        private readonly HttpClient _httpClient;
 
-        public void LoadCategories()
+        public CategoryService(HttpClient http)
         {
-            Categories = new List<Category>
-            {
-                new Category {Id = 1, Name = "Books", Url = "books", Icon = "book"},
-                new Category {Id = 2, Name = "Electronics", Url = "electronics", Icon = "camera-slr"},
-                new Category {Id = 3, Name = "Video Games", Url = "video-games", Icon = "aperture"}
-            };
+            this._httpClient = http;
         }
+        public async Task LoadCategories()
+        {
+            Categories = await _httpClient.GetFromJsonAsync<List<Category>>("api/Category");
+        }
+
     }
 }
