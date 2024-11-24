@@ -1,4 +1,5 @@
-﻿using BlazingShop.Shared;
+﻿using BlazingShop.Server.Services.CategoryService;
+using BlazingShop.Shared;
 
 namespace BlazingShop.Server.Services.ProductService
 {
@@ -28,7 +29,7 @@ namespace BlazingShop.Server.Services.ProductService
                     CategoryId = 1,
                     Title = "Nineteen Eighty-Four",
                     Description = "Nineteen Eighty-Four: A Novel, often published as 1984, is a dystopian social science fiction novel by English novelist George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime.",
-                    Image = "https://upload.wikimedia.org/wikipedia/en/c/c3/1984first.jpg",
+                    Image = "https://upload.wikimedia.org/wikipedia/en/5/51/1984_first_edition_cover.jpg",
                     Price = 6.99m
                 },
                 new Product {
@@ -85,7 +86,12 @@ namespace BlazingShop.Server.Services.ProductService
                     Price = 14.99m
                 },
             };
+        private readonly ICategoryService _categoryService;
 
+        public ProductService(ICategoryService categoryService)
+        {
+            this._categoryService = categoryService;
+        }
 
         public async Task<List<Product>> GetAllProducts()
         {
@@ -94,12 +100,14 @@ namespace BlazingShop.Server.Services.ProductService
 
         public async Task<Product> GetProduct(int id)
         {
-            throw new NotImplementedException();
+            Product product = Products.FirstOrDefault(x => x.Id == id);
+            return product;
         }
 
         public async Task<List<Product>> GetProductsByCategory(string categoryUrl)
         {
-            throw new NotImplementedException();
+            Category category = await _categoryService.GetCategoryByUrl(categoryUrl);
+            return Products.Where(p => p.CategoryId == category.Id).ToList();
         }
     }
 }
